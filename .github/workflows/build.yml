@@ -19,6 +19,9 @@ jobs:
       - name: Download dependencies
         run: go mod tidy
 
+      - name: Download dependencies2
+        run: go mod download
+
       - name: Build binary for linux/amd64
         run: |
           GOOS=linux GOARCH=amd64 go build -v -o flowstats_linux_amd64 .
