@@ -24,6 +24,9 @@ jobs:
           export PATH=$PATH:/usr/local/go/bin
           go version
 
+      - name: Go mod tidy
+        run: go mod tidy
+
       - name: 下载 go 依赖
         run: go mod download
 
