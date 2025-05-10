@@ -32,7 +32,7 @@ jobs:
 
       - name: 进行静态编译
         run: |
-          CGO_ENABLED=1 GOOS=linux GOARCH=amd64 CC=musl-gcc go build -ldflags '-extldflags "-static"' -o mybinary
+          CGO_ENABLED=1 GOOS=linux GOARCH=amd64 go build -ldflags '-extldflags "-static"' -o mybinary
 
       - name: 验证编译结果
         run: file mybinary
