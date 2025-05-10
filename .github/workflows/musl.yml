@@ -14,7 +14,7 @@ jobs:
 
       - name: 安装构建依赖
         run: |
-          apk add --no-cache go musl musl-dev gcc libpcap-dev
+          apk add --no-cache go musl musl-dev gcc libpcap-dev file
 
       - name: 设置 Go 版本
         run: |
