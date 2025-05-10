@@ -1,4 +1,4 @@
-module net_packet_statistics
+module github.com/sofair/net_packet_statistics
 
 go 1.20
 
