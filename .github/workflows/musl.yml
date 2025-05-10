@@ -1,0 +1,41 @@
+name: Alpine Static Build
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: alpine:latest
+
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+
+      - name: 安装构建依赖
+        run: |
+          apk add --no-cache go musl musl-dev gcc libpcap-dev
+
+      - name: 设置 Go 版本
+        run: |
+          export GO_VERSION=1.20
+          wget https://golang.org/dl/go${GO_VERSION}.linux-amd64.tar.gz
+          tar -C /usr/local -xzf go${GO_VERSION}.linux-amd64.tar.gz
+          export PATH=$PATH:/usr/local/go/bin
+          go version
+
+      - name: 进行静态编译
+        run: |
+          CGO_ENABLED=1 GOOS=linux GOARCH=amd64 CC=musl-gcc go build -ldflags '-extldflags "-static"' -o mybinary
+
+      - name: 验证编译结果
+        run: file mybinary
+
+      - name: 上传构建产物
+        uses: actions/upload-artifact@v4
+        with:
+          name: alpine-static-binary
+          path: mybinary
